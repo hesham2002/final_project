@@ -6,10 +6,15 @@ import 'package:doclink_project/screens/register_screen.dart';
 import 'package:doclink_project/screens/search_screen.dart';
 import 'package:doclink_project/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'views/dectors_section.dart';
+import 'views/home.dart';
+import 'views/schadualepage.dart';
 
-void main(){
+void main() {
+  debugPrintRebuildDirtyWidgets = true;
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -18,7 +23,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      home: ChatScreen(),
+
+      // initialRoute: 'HospitalHomePage',
+      initialRoute: 'HospitalHomePage',
+      routes: {
+        // '/details': (context) => DetailsPage(),
+        "HospitalHomePage": (context) => HospitalHomePage(),
+        "SchadualerPage": (context) => SchadualerPage(),
+        "AppiontmentPage": (context) => DectorSection(),
+        //
+        "ChatScreen": (context) => ChatScreen(),
+        "HomeScreen": (context) => HomeScreen(),
+        "LoginScreen": (context) => LoginScreen(),
+        "ProfileScreen": (context) => ProfileScreen(),
+        "RegisterScreen": (context) => RegisterScreen(),
+        "Search_screen": (context) => Search_screen(),
+        "SplashScreen": (context) => SplashScreen(),
+      },
     );
   }
 }

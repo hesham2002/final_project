@@ -49,7 +49,7 @@ class _Search_screenState extends State<Search_screen> {
               },
               child: Text('Search'),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF191C29), // Set custom button color
+                backgroundColor: Color(0xFF191C29), // Set custom button color
               ),
             ),
           ],

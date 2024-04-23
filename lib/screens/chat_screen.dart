@@ -17,6 +17,8 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,18 +33,17 @@ class _ChatScreenState extends State<ChatScreen> {
         centerTitle: true, // Center the title
         backgroundColor: Color(0xFF191C29),
         flexibleSpace: Container(
-      decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          Color(0xFF191C29),
-         // Color(0xFF21E758),
-        ],
-      begin: Alignment.centerLeft,
-      end: Alignment.centerRight,
-      ),
-    ),
-    ),
-
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF191C29),
+                // Color(0xFF21E758),
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+          ),
+        ),
 
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -84,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                   child: Text('Send'),
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFF191C29), // Set custom button color
+                    backgroundColor: Color(0xFF191C29), // Set custom button color
                   ),
                 ),
               ],
@@ -99,7 +100,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: Align(
-        alignment: index % 2 == 0 ? Alignment.centerRight : Alignment.centerLeft,
+        alignment:
+            index % 2 == 0 ? Alignment.centerRight : Alignment.centerLeft,
         child: Container(
           padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
