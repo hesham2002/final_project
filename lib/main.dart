@@ -13,7 +13,7 @@ import 'views/schadualepage.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrintRebuildDirtyWidgets = true;
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
