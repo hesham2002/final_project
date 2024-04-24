@@ -11,6 +11,7 @@ import 'views/home.dart';
 import 'views/schadualepage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   debugPrintRebuildDirtyWidgets = true;
   runApp(MyApp());
 }
