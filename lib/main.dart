@@ -12,12 +12,14 @@ import 'views/doctors_section_screen.dart';
 import 'views/hospital_screen.dart';
 import 'views/schedule_screen.dart';
 
+
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
    options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 

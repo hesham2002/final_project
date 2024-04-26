@@ -103,7 +103,7 @@ class DectorSection extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Surgeon",
+                    "Surrgeon",
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
