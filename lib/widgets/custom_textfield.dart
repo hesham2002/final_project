@@ -5,16 +5,21 @@ class CustomTextField extends StatelessWidget {
       {super.key,
         required this.hintText,
         this.onChanged,
-        required this.hiddenText,this.keyboardType});
+        required this.hiddenText,this.keyboardType,this.validator,this.controller,this.onTapOutside});
 
   String hintText;
   bool hiddenText = false;
   TextInputType? keyboardType;
   Function(String)? onChanged;
-
+  String? Function(String?)? validator;
+  TextEditingController? controller;
+  void Function(PointerDownEvent)? onTapOutside;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      onTapOutside: onTapOutside,
+      controller: controller,
+      validator: validator,
       keyboardType: keyboardType,
       obscureText: hiddenText,
       onChanged: onChanged,

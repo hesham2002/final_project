@@ -5,14 +5,20 @@ import 'package:doclink_project/screens/profile_screen.dart';
 import 'package:doclink_project/screens/register_screen.dart';
 import 'package:doclink_project/screens/search_screen.dart';
 import 'package:doclink_project/screens/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'views/dectors_section.dart';
-import 'views/home.dart';
-import 'views/schadualepage.dart';
+import 'firebase_options.dart';
+import 'views/doctors_section_screen.dart';
+import 'views/hospital_screen.dart';
+import 'views/schedule_screen.dart';
 
-void main() {
-  debugPrintRebuildDirtyWidgets = true;
-  runApp(MyApp());
+Future<void> main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,19 +31,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(useMaterial3: false),
 
       // initialRoute: 'HospitalHomePage',
-      initialRoute: 'HospitalHomePage',
+      initialRoute: 'SplashScreen',
       routes: {
         // '/details': (context) => DetailsPage(),
         "HospitalHomePage": (context) => HospitalHomePage(),
-        "SchadualerPage": (context) => SchadualerPage(),
-        "AppiontmentPage": (context) => DectorSection(),
-        //
+        "ScheduleScreen": (context) => ScheduleScreen(),
+        "AppointmentScreen": (context) => DectorSection(),
         "ChatScreen": (context) => ChatScreen(),
-        "HomeScreen": (context) => HomeScreen(),
+        "EntryScreen": (context) => EntryScreen(),
         "LoginScreen": (context) => LoginScreen(),
         "ProfileScreen": (context) => ProfileScreen(),
         "RegisterScreen": (context) => RegisterScreen(),
-        "Search_screen": (context) => Search_screen(),
+        "SearchScreen": (context) => Search_screen(),
         "SplashScreen": (context) => SplashScreen(),
       },
     );

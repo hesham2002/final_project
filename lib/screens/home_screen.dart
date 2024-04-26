@@ -1,12 +1,12 @@
 import 'package:doclink_project/widgets/animated_card.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class EntryScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _EntryScreenState createState() => _EntryScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _EntryScreenState extends State<EntryScreen> {
   bool firstCardFocused = false;
   bool secondCardFocused = false;
 

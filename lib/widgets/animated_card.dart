@@ -1,3 +1,4 @@
+import 'package:doclink_project/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class Animated3DCard extends StatefulWidget {
@@ -39,6 +40,7 @@ class Animated3DCardState extends State<Animated3DCard>
       children: [
         InkWell(
           onTap: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
             setState(() {
               isHovered = !isHovered;
               if (isHovered) {

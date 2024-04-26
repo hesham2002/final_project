@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'dectors_section.dart';
-
-// import 'dectors_section.dart';
-//import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'doctors_section_screen.dart';
 
 // ignore: must_be_immutable
-class SchadualerPage extends StatelessWidget {
-  SchadualerPage({super.key});
+class ScheduleScreen extends StatelessWidget {
+  ScheduleScreen({super.key});
   List catNames = [
     "Dental",
     "Heart",

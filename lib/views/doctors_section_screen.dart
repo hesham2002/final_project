@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'appointment_page.dart';
+import 'appointment_screen.dart';
 
 class DectorSection extends StatelessWidget {
   const DectorSection({super.key});
@@ -40,7 +40,7 @@ class DectorSection extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AppointmentPage(),
+                              builder: (context) => AppointmentScreen(),
                             ),
                           );
                         },

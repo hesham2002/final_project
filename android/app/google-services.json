@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "939452353807",
+    "project_id": "doclink-b6563",
+    "storage_bucket": "doclink-b6563.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939452353807:android:c3b58934b1d8119357427a",
+        "android_client_info": {
+          "package_name": "com.example.doclink_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASOOiw6AQ73Q9RgFKbGUnrM7SwGP2QkcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

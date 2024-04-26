@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-// import 'package:flutter/src/rendering/box.dart';
-class AppointmentPage extends StatelessWidget {
-  const AppointmentPage({super.key});
+class AppointmentScreen extends StatelessWidget {
+  const AppointmentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

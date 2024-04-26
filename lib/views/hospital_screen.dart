@@ -14,10 +14,10 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
   
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 53, 30, 84), // Light gray background
+      backgroundColor: Color.fromARGB(255, 30, 30, 84), // Light gray background
       appBar: AppBar(
         elevation: 0, // No elevation for the app bar
-        backgroundColor: Color.fromARGB(255, 111, 107, 222), // Blue app bar
+        backgroundColor: Color.fromARGB(255, 40, 107, 222), // Blue app bar
         title: Text(
           'Hospital',
           style: TextStyle(
@@ -79,7 +79,7 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
                   title: 'Schedule',
                   onTap: (
                   ) {
-                    Navigator.pushNamed(context,"SchadualerPage");
+                    Navigator.pushNamed(context,"ScheduleScreen");
                     // Navigate to schedule page
                   },
                 ),
@@ -98,8 +98,8 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
 
   bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.transparent,
-        buttonBackgroundColor: Color.fromARGB(255, 141, 121, 198),
-        color: Color.fromARGB(255, 147, 94, 215),
+        buttonBackgroundColor: Color.fromARGB(255, 40, 121, 198),
+        color: Color.fromARGB(255, 40, 94, 215),
         animationDuration: const Duration(milliseconds: 300),
         items: const <Widget>[
           Icon(Icons.home, size: 26, color: Colors.white),
