@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'appointment_screen.dart';
 
-class DectorSection extends StatelessWidget {
-  const DectorSection({super.key});
+class DoctorSection extends StatelessWidget {
+  const DoctorSection({super.key});
 
   @override
   Widget build(BuildContext context) {

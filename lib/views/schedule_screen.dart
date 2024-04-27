@@ -59,10 +59,10 @@ class ScheduleScreen extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 54, 34, 81),
+      backgroundColor: Color.fromARGB(255, 20, 34, 81),
       appBar: AppBar(
         title: Text('Scaduale Page'),
-        backgroundColor: Color.fromARGB(255, 111, 107, 222),
+        backgroundColor: Color.fromARGB(255, 40, 107, 222),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -246,7 +246,7 @@ class ScheduleScreen extends StatelessWidget {
               ),
               Container(
                 height: 400,
-                child: DectorSection(),
+                child: DoctorSection(),
               )
             ],
           ),

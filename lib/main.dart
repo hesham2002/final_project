@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         // '/details': (context) => DetailsPage(),
         "HospitalHomePage": (context) => HospitalHomePage(),
         "ScheduleScreen": (context) => ScheduleScreen(),
-        "AppointmentScreen": (context) => DectorSection(),
+        "AppointmentScreen": (context) => DoctorSection(),
         "ChatScreen": (context) => ChatScreen(),
         "EntryScreen": (context) => EntryScreen(),
         "LoginScreen": (context) => LoginScreen(),
