@@ -260,72 +260,78 @@ class AppointmentScreen extends StatelessWidget {
                     SizedBox(
                       height: 8,
                     ),
-                    Container(
-                      height: 30,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 7,
-                        itemBuilder: (context, index) {
-                          return SizedBox(
-                            height: 60,
-                            child: Column(
-                              children: [
-                                // InkWell(
-                                //   child:
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 5),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 25),
-                                  decoration: BoxDecoration(
-                                      color: index == 1
-                                          ? Color.fromARGB(255, 64, 91, 119)
-                                          : Color.fromARGB(255, 35, 18, 18),
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Color(0xFFE1CDCD),
-                                          blurRadius: 5,
-                                          spreadRadius: 2,
-                                        ),
-                                      ]),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${index + 8}",
-                                        style: TextStyle(
-                                          fontSize: 17,
+                    SizedBox(
+                      child: FittedBox(
+                        child: SizedBox(
+                          height: 90,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 7,
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                height: 60,
+                                child: Column(
+                                  children: [
+                                    // InkWell(
+                                    //   child:
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 5),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 25),
+                                      decoration: BoxDecoration(
                                           color: index == 1
-                                              ? Color.fromARGB(255, 146, 75, 75)
-                                              : Colors.blue.withOpacity(0.8),
-                                        ),
+                                              ? Colors.blue
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Color(0xFFE1CDCD),
+                                              blurRadius: 5,
+                                              spreadRadius: 2,
+                                            ),
+                                          ]),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${index + 8}",
+                                            style: TextStyle(
+                                              fontSize: 17,
+                                              color: index == 1
+                                                  ? Color.fromARGB(
+                                                      255, 227, 225, 225)
+                                                  : Colors.blue
+                                                      .withOpacity(0.8),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "DEC",
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.w500,
+                                              color: index == 1
+                                                  ? Colors.white
+                                                  : Colors.blue
+                                                      .withOpacity(0.6),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 2,
-                                      ),
-                                      Text(
-                                        "DEC",
-                                        style: TextStyle(
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.w500,
-                                          color: index == 1
-                                              ? Color.fromARGB(255, 185, 90, 90)
-                                              : Color.fromARGB(
-                                                      255, 74, 111, 142)
-                                                  .withOpacity(0.6),
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                    ),
+                                    //);
+                                  ],
                                 ),
-                                //);
-                              ],
-                            ),
-                          );
-                        },
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
