@@ -1,3 +1,4 @@
+import 'package:doclink_project/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class Search_screen extends StatefulWidget {
@@ -12,6 +13,13 @@ class _Search_screenState extends State<Search_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(),));
+              },
+              child: CircleAvatar(child: Icon(Icons.person))),
+        ],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

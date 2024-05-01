@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +81,24 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(width: 10),
                   Text('+1 234 567 890'),
                 ],
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent, // Change the color here
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(10), // Change the shape here
+                    ),
+                  ),
+                  child: Text('Sign Out'),
+                ),
               ),
             ],
           ),

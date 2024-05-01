@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:doclink_project/screens/home_screen.dart';
+import 'package:doclink_project/screens/intro_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => EntryScreen()),
+        MaterialPageRoute(builder: (context) => IntroScreen()),
       );
     });
   }
