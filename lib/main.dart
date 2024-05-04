@@ -1,4 +1,3 @@
-import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/screens/chat_screen.dart';
 import 'package:doclink_project/screens/intro_screen.dart';
 import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
@@ -40,9 +39,7 @@ class MyApp extends StatelessWidget {
         "AppointmentScreen": (context) => DoctorSection(),
         "ChatScreen": (context) => ChatScreen(),
         "EntryScreen": (context) => IntroScreen(),
-        "LoginScreen": (context) => MedicalLoginScreen(),
         "ProfileScreen": (context) => ProfileScreen(),
-        "RegisterScreen": (context) => PatientRegisterScreen(),
         "SearchScreen": (context) => Search_screen(),
         "SplashScreen": (context) => SplashScreen(),
       },

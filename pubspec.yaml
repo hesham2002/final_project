@@ -45,6 +45,7 @@ dependencies:
   geojson: ^1.0.0
   flutter_bloc: ^8.1.5
   shared_preferences: ^2.2.3
+  http: ^0.13.6
 
 
 

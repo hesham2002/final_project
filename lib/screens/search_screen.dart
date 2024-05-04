@@ -1,4 +1,5 @@
 import 'package:doclink_project/screens/profile_screen.dart';
+import 'package:doclink_project/views/hospital_screen.dart';
 import 'package:flutter/material.dart';
 
 class Search_screen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _Search_screenState extends State<Search_screen> {
         actions: [
           GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfileScreen(),));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HospitalHomePage(),));
               },
               child: CircleAvatar(child: Icon(Icons.person))),
         ],
