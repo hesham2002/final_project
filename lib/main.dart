@@ -12,6 +12,8 @@ import 'firebase_options.dart';
 import 'views/doctors_section_screen.dart';
 import 'views/hospital_screen.dart';
 import 'views/schedule_screen.dart';
+import 'views/transform_screen.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,9 +32,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      home: SplashScreen(),
+      home: 
+      TransformScreen(),
+      //IntroScreen(),
+      // PatientRegisterScreen(),
+      //SplashScreen(),
       // initialRoute: 'HospitalHomePage',
-      // initialRoute: 'SplashScreen',
+      //  initialRoute: 'SplashScreen',
       routes: {
         // '/details': (context) => DetailsPage(),
         "HospitalHomePage": (context) => HospitalHomePage(),
@@ -43,6 +49,8 @@ class MyApp extends StatelessWidget {
         "LoginScreen": (context) => MedicalLoginScreen(),
         "ProfileScreen": (context) => ProfileScreen(),
         "RegisterScreen": (context) => PatientRegisterScreen(),
+       "TransformScreen":(context)=>TransformScreen(),
+        //  "LoginpationtScreen": (context) =>PatientLoginScree(),
         "SearchScreen": (context) => Search_screen(),
         "SplashScreen": (context) => SplashScreen(),
       },

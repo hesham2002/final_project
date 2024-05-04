@@ -62,7 +62,7 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
               children: [
                 _buildServiceCard(
                   icon: Icons.local_hospital,
-                  title: 'Our Services',
+                  title: 'Anther Services',
                   onTap: () {
                     // Navigate to services page
                   },
@@ -103,9 +103,9 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
         animationDuration: const Duration(milliseconds: 300),
         items: const <Widget>[
           Icon(Icons.home, size: 26, color: Colors.white),
-          Icon(Icons.message, size: 26, color: Colors.white),
+          // Icon(Icons.message, size: 26, color: Colors.white),
           Icon(Icons.add, size: 26, color: Colors.white),
-          Icon(Icons.notifications, size: 26, color: Colors.white),
+          // Icon(Icons.notifications, size: 26, color: Colors.white),
           Icon(Icons.person, size: 26, color: Colors.white),
         ],
         onTap: (index) {

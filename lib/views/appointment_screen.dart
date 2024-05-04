@@ -70,7 +70,7 @@ class AppointmentScreen extends StatelessWidget {
                                           spreadRadius: 2,
                                         )
                                       ]),
-                                  child: Center(
+                                  child: const Center(
                                     child: Icon(
                                       Icons.arrow_back,
                                       color: Colors.red,
@@ -97,10 +97,10 @@ class AppointmentScreen extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: Icon(
                                       Icons.favorite_outline,
-                                      color: const Color.fromARGB(
+                                      color: Color.fromARGB(
                                           255, 216, 158, 158),
                                       size: 28,
                                     ),
@@ -110,7 +110,7 @@ class AppointmentScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 80,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
