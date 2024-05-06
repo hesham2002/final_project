@@ -1,13 +1,13 @@
-import 'package:doclink_project/screens/profile_screen.dart';
-import 'package:doclink_project/views/hospital_screen.dart';
+
+import 'package:doclink_project/screens/hospital_part/hospital_screen.dart';
 import 'package:flutter/material.dart';
 
-class Search_screen extends StatefulWidget {
+class SearchScreen extends StatefulWidget {
   @override
-  _Search_screenState createState() => _Search_screenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _Search_screenState extends State<Search_screen> {
+class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
 
   @override
@@ -29,7 +29,7 @@ class _Search_screenState extends State<Search_screen> {
         ),
         title: Text('Medical Services'),
         centerTitle: true,
-        backgroundColor: Color(0xFF191C29), // Set custom app bar color
+        backgroundColor: Color(0xFF191C29),
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
@@ -54,11 +54,11 @@ class _Search_screenState extends State<Search_screen> {
             ElevatedButton(
               onPressed: () {
                 String searchQuery = _searchController.text;
-                // Implement search functionality here
+
               },
               child: Text('Search'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF191C29), // Set custom button color
+                backgroundColor: Color(0xFF191C29),
               ),
             ),
           ],

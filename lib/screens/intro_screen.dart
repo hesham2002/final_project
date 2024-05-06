@@ -1,3 +1,5 @@
+import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
+import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/widgets/animated_card.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +20,37 @@ class _IntroScreenState extends State<IntroScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Animated3DCard(
-              coverImage: 'assets/patient.jpeg',
-              title: 'patients',
+            InkWell(
+              child: const Animated3DCard(
+                coverImage: 'assets/patient.jpeg',
+                title: 'patients',
+                child: Text("jj"),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PatientLoginScreen(),
+                  ),
+                );
+              },
+              //  child:Text("nn"),
             ),
-            SizedBox(height: 20), // Add some space between the cards
-            Animated3DCard(
-              coverImage: 'assets/medical_staff.jpeg',
-              title: 'medical staff',
+            // ),
+            const SizedBox(height: 20), // Add some space between the cards
+
+            InkWell(
+              child: const Animated3DCard(
+                coverImage: 'assets/medical_staff.jpeg',
+                title: 'medical staff',
+                child: null,
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MedicalLoginScreen()),
+                );
+              },
             ),
           ],
         ),

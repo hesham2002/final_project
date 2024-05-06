@@ -1,4 +1,5 @@
 class DoctorModel {
+  final String image;
   final String doctorId;
   final String doctorName;
   final String email;
@@ -8,6 +9,7 @@ class DoctorModel {
   final int hospital;
 
   DoctorModel({
+    required this.image,
     required this.doctorId,
     required this.doctorName,
     required this.email,
@@ -25,12 +27,13 @@ class DoctorModel {
       specializationName: json['specialization_name'],
       hospitalName: json['hospital_name'],
       specialization: json['specialization'],
-      hospital: json['hospital'],
+      hospital: json['hospital'], image: json['image'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'doctor_image':image,
       'doctor_id': doctorId,
       'doctorName': doctorName,
       'email': email,

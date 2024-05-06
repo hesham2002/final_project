@@ -1,16 +1,14 @@
-import 'package:doclink_project/screens/chat_screen.dart';
+import 'package:doclink_project/screens/chat_part/chat_screen.dart';
+import 'package:doclink_project/screens/doctor_part/doctor_profile_screen.dart';
 import 'package:doclink_project/screens/intro_screen.dart';
-import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
-import 'package:doclink_project/screens/profile_screen.dart';
 import 'package:doclink_project/screens/auth_screens/patient_register_screen.dart';
 import 'package:doclink_project/screens/search_screen.dart';
 import 'package:doclink_project/screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
-import 'views/doctors_section_screen.dart';
-import 'views/hospital_screen.dart';
-import 'views/schedule_screen.dart';
+import 'screens/hospital_part/hospital_screen.dart';
+import 'screens/transform_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,18 +27,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: false),
-      home: SplashScreen(),
-      // initialRoute: 'HospitalHomePage',
-      // initialRoute: 'SplashScreen',
+      home: HospitalHomePage(),
       routes: {
-        // '/details': (context) => DetailsPage(),
         "HospitalHomePage": (context) => HospitalHomePage(),
-        "ScheduleScreen": (context) => ScheduleScreen(),
-        "AppointmentScreen": (context) => DoctorSection(),
         "ChatScreen": (context) => ChatScreen(),
         "EntryScreen": (context) => IntroScreen(),
-        "ProfileScreen": (context) => ProfileScreen(),
-        "SearchScreen": (context) => Search_screen(),
+        "RegisterScreen": (context) => PatientRegisterScreen(),
+        "TransformScreen": (context) => TransformScreen(),
+        "SearchScreen": (context) => SearchScreen(),
         "SplashScreen": (context) => SplashScreen(),
       },
     );

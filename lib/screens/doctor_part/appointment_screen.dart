@@ -1,201 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AppointmentScreen extends StatelessWidget {
-  const AppointmentScreen({super.key});
+  const AppointmentScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 30, 30, 84),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Container(
         // color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 300,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image:
-                            AssetImage("lib/assets/assets_images/doctor1.jpg"),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(136, 143, 139, 139).withOpacity(0.9),
-                        Color.fromARGB(136, 94, 85, 85).withOpacity(0),
-                        const Color.fromARGB(137, 181, 70, 70).withOpacity(0),
-                      ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                    )),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: 0.0, left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.all(8),
-                                  height: 45,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 64, 64, 125),
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color:
-                                              Color.fromARGB(134, 100, 48, 48)
-                                                  .withOpacity(0.9),
-                                          blurRadius: 4,
-                                          spreadRadius: 2,
-                                        )
-                                      ]),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.arrow_back,
-                                      color: Colors.red,
-                                      size: 28,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.all(8),
-                                  width: 40,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff2f2f8f),
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color:
-                                            Color.fromARGB(135, 187, 174, 174)
-                                                .withOpacity(0.9),
-                                        blurRadius: 4,
-                                        spreadRadius: 2,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.favorite_outline,
-                                      color: const Color.fromARGB(
-                                          255, 216, 158, 158),
-                                      size: 28,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 80,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Patients",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "1.8k",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Experience",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "10 yr",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Rating",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "4.9",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 10,
               ),
@@ -205,7 +31,7 @@ class AppointmentScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dr looney",
+                      'Dr. John Doe',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w500,
@@ -273,8 +99,6 @@ class AppointmentScreen extends StatelessWidget {
                                 height: 60,
                                 child: Column(
                                   children: [
-                                    // InkWell(
-                                    //   child:
                                     Container(
                                       margin: EdgeInsets.symmetric(
                                           horizontal: 8, vertical: 5),
@@ -325,7 +149,6 @@ class AppointmentScreen extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    //);
                                   ],
                                 ),
                               );
@@ -394,15 +217,15 @@ class AppointmentScreen extends StatelessWidget {
                       child: InkWell(
                         onTap: () {},
                         child: Container(
-                          color: Colors.blue,
+                          color: Color.fromARGB(255, 30, 30, 84),
                           height: 60,
                           width: MediaQuery.of(context).size.width,
                           child: Center(
                             child: Text(
-                              "Book Appiontment",
+                              "Book Appointment",
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

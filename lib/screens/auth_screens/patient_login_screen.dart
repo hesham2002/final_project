@@ -1,5 +1,6 @@
 import 'package:doclink_project/screens/auth_screens/patient_register_screen.dart';
-import 'package:doclink_project/views/hospital_screen.dart';
+import 'package:doclink_project/screens/search_screen.dart';
+import 'package:doclink_project/screens/hospital_part/hospital_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,7 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HospitalHomePage(),
+                              builder: (context) => SearchScreen(),
                             ),
                           );
                         } on FirebaseAuthException catch (e) {
