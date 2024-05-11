@@ -118,6 +118,29 @@ class _HospitalHomePageState extends State<HospitalHomePage> {
                 ),
               ],
             ),
+            SizedBox(height: 20,),
+            Row(
+              children: [
+                CircleAvatar(
+                  child: Icon(
+                    Icons.phone,
+                    color: Colors.green,
+                    size: 30,
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  '19561',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
