@@ -1,3 +1,4 @@
+import 'package:doclink_project/models/patient_user_model.dart';
 import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
 import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../../services/auth_service.dart';
 import '../../widgets/custom_button.dart';
 
 class PatientRegisterScreen extends StatefulWidget {
@@ -13,12 +15,12 @@ class PatientRegisterScreen extends StatefulWidget {
 }
 
 class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
-  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _idController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   bool isLoading = false;
-  String? userName;
+  String? id;
   String? email;
   String? password;
   GlobalKey<FormState> formKey = GlobalKey();
@@ -50,31 +52,36 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ListView(
-
                 children: [
+
                   SizedBox(height: screenHeight * 0.2),
+
                   Text(
-                    'Sign Up',
+                    'Create an Account',
                     style: TextStyle(
-                      fontSize: screenWidth * 0.08,
+                      fontSize: 24,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: screenHeight * 0.05),
                   CustomTextField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter your username';
+                        return 'Please enter your job ID';
+                      }
+                      if (value.length != 8 || int.tryParse(value) == null) {
+                        return 'Job ID should consist of 8 numbers';
                       }
                       return null;
                     },
-                    hintText: 'Username',
+                    controller: _idController,
+                    hintText: 'Id',
                     hiddenText: false,
                     onChanged: (data) {
-                      userName = data;
+                      id = data;
                     },
-                    controller: _usernameController,
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(height: screenHeight * 0.02),
@@ -124,24 +131,31 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                             email: email!,
                             password: password!,
                           );
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Registration successful'),
-                            ),
-                          );
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MedicalLoginScreen(),
-                            ),
-                          );
+                          if (userCredential.user != null) {
+                            PatientUser patientUser = PatientUser(
+                              email: email,
+                              id: id,
+                            );
+                            await AuthService().savePatientData(patientUser);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Registration successful'),
+                              ),
+                            );
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PatientLoginScreen(),
+                              ),
+                            );
+                          }
                         } on FirebaseAuthException catch (e) {
                           String errorMessage = 'An error occurred';
                           if (e.code == 'weak-password') {
                             errorMessage = 'The password provided is too weak';
                           } else if (e.code == 'email-already-in-use') {
-                            errorMessage = 'The account already exists for that email';
+                            errorMessage =
+                                'The account already exists for that email';
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(errorMessage)),

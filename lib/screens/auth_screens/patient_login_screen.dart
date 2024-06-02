@@ -21,6 +21,45 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
   String? password;
   GlobalKey<FormState> formKey = GlobalKey();
 
+  Future<void> _resetPassword() async {
+    if (_emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please enter your email to reset your password'),
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Password reset email sent'),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email';
+      } else {
+        errorMessage = 'Error: ${e.message}';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $e'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -48,16 +87,16 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ListView(
-
                 children: [
-                  SizedBox(height: screenHeight * 0.2),
+                  SizedBox(height: screenHeight * 0.15),
                   Text(
-                    'Log In',
+                    'Login to your account now',
                     style: TextStyle(
-                      fontSize: screenWidth * 0.08,
+                      fontSize: 25,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                   SizedBox(height: screenHeight * 0.05),
                   CustomTextField(
@@ -91,6 +130,7 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
                     },
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
+
                   SizedBox(height: screenHeight * 0.05),
                   CustomButton(
                     buttonName: 'Log In',
@@ -153,6 +193,17 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
                         );
                       }
                     },
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Align(
+                    alignment: Alignment.center,
+                    child: TextButton(
+                      onPressed: _resetPassword,
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                   SizedBox(height: screenHeight * 0.05),
                   Row(

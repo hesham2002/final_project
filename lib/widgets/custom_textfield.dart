@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   CustomTextField(
       {super.key,
-        required this.hintText,
+        required this.hintText,this.labelText,
         this.onChanged,
         required this.hiddenText,this.keyboardType,this.validator,this.controller,this.onTapOutside});
-
+  String? labelText;
   String hintText;
   bool hiddenText = false;
   TextInputType? keyboardType;
@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+
       onTapOutside: onTapOutside,
       controller: controller,
       validator: validator,
@@ -25,11 +26,12 @@ class CustomTextField extends StatelessWidget {
       onChanged: onChanged,
       style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
+        labelText: labelText,
         filled: true,
         fillColor: Colors.white,
-        labelStyle: const TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.black),
         hintText: hintText,
-        hintStyle: const TextStyle(color: Colors.black),
+        hintStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),

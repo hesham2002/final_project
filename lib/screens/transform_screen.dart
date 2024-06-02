@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class TransformScreen extends StatefulWidget {
@@ -11,163 +11,145 @@ class TransformScreen extends StatefulWidget {
 
 class _TransformScreenState extends State<TransformScreen> {
   final List<String> items = ['Hospital 1', 'Hospital 2', 'Hospital 3'];
+  String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.selectedValue;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 30, 30, 84),
-      body: Center(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Transform Patient'),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 30, 30, 84),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: ListView(
           children: [
-            Stack(
-              children: [
-                Container(
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    border: Border.symmetric(
-                      horizontal: BorderSide(
-                        color: Colors.red,
-                        style: BorderStyle.solid,
-                      ),
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(400),
-                      bottomLeft: Radius.circular(400),
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Transform',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 12,
-                  left: 15,
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back,size: 30,),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ],
-            )
-,
-            SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  TextFormField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Name',
-                      hintStyle: TextStyle(color: Colors.black),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Age',
-                      hintStyle: TextStyle(color: Colors.black),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    height: 180,
-                    width: 140,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Icon(
-                      Icons.camera_alt,
-                      size: 50.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  DropdownButton<String>(
-                    padding: EdgeInsets.symmetric(horizontal: 110),
-                    hint: Text(
-                      "Select",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                    ),
-                    value: widget.selectedValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        var selectedValue = newValue;
-                      });
-                    },
-                    items: items.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    style: TextStyle(color: Colors.white),
-                    dropdownColor: Colors.blueGrey[600],
-                    elevation: 4,
-                    icon: Icon(Icons.arrow_drop_down, color: Colors.white),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: 52,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Send',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
+            SizedBox(height: 20),
+            _buildTextField('enter the name', 'Patient Name'),
+            SizedBox(height: 20),
+            _buildTextField('enter the id', 'ID'),
+            SizedBox(height: 20),
+            _buildCameraContainer(),
+            SizedBox(height: 20),
+            _buildDropdown(),
+            SizedBox(height: 30),
+            _buildSendButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(String hintText, String labelText) {
+    return CustomTextField(
+
+      hintText: hintText,
+      labelText: labelText,
+      hiddenText: false,
+      onTapOutside: (p0) => FocusScope.of(context).unfocus(),
+    );
+  }
+
+  Widget _buildCameraContainer() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 100),
+      child: Container(
+        height: 180,
+        width: 150,
+        decoration: BoxDecoration(
+          color: Colors.blueGrey[50],
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.camera_alt,
+              size: 50.0,
+              color: Colors.black,
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Select a report image\nfrom your gallery',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDropdown() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.blueGrey[50],
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: DropdownButton<String>(
+        hint: Text(
+          "Select doctor",
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ),
+        value: selectedValue,
+        onChanged: (newValue) {
+          setState(() {
+            selectedValue = newValue;
+          });
+        },
+        items: items.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        isExpanded: true,
+        underline: SizedBox(),
+        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+        dropdownColor: Colors.blueGrey[50],
+      ),
+    );
+  }
+
+  Widget _buildSendButton() {
+    return GestureDetector(
+      onTap: () {
+        // Handle send action
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.6,
+        height: 52,
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 30, 30, 84),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Center(
+          child: Text(
+            'Send',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );

@@ -106,7 +106,7 @@ class AppointmentScreen extends StatelessWidget {
                                           vertical: 8, horizontal: 25),
                                       decoration: BoxDecoration(
                                           color: index == 1
-                                              ? Colors.blue
+                                              ? Color.fromARGB(255, 30, 30, 84)
                                               : Colors.white,
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -184,7 +184,7 @@ class AppointmentScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 5),
                             decoration: BoxDecoration(
-                                color: index == 2 ? Colors.blue : Colors.white,
+                                color: index == 2 ? Color.fromARGB(255, 30, 30, 84) : Colors.white,
                                 boxShadow: [
                                   BoxShadow(
                                     color: const Color.fromARGB(
@@ -222,7 +222,7 @@ class AppointmentScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           child: Center(
                             child: Text(
-                              "Book Appointment",
+                              "reserve an appointment",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,

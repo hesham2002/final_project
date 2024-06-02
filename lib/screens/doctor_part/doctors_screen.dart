@@ -40,6 +40,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Card(
+
               elevation: 4,
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.blueGrey),
