@@ -90,7 +90,7 @@ flutter:
      - lib/assets/assets_images/medicService.jpg
      - assets/medical_staff.jpeg
      - assets/appIcon.png
-     - assets/geojson/geojson_hospitals.geojson
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

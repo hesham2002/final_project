@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
-import '../../models/clinic_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../new_models/hospital_model.dart';
 
 class ClinicScreen extends StatefulWidget {
+  ClinicScreen({Key? key,required this.hospital}) : super(key: key);
+  Hospital hospital;
   @override
   State<ClinicScreen> createState() => _ClinicScreenState();
 }
 
 class _ClinicScreenState extends State<ClinicScreen> {
-  final List<Clinic> clinics = [
-    Clinic(name: 'Emergency Department', icon: Icons.local_hospital),
-    Clinic(name: 'Outpatient Clinic', icon: Icons.local_hospital),
-    Clinic(name: 'Surgical Clinic', icon: Icons.local_hospital),
-    Clinic(name: 'Internal Medicine Clinic', icon: Icons.local_hospital),
-    Clinic(name: 'Pediatrics Clinic', icon: Icons.child_care),
-    Clinic(name: 'Obstetrics and Gynecology Clinic', icon: Icons.pregnant_woman),
-    Clinic(name: 'Orthopedic Clinic', icon: Icons.accessibility),
-    Clinic(name: 'Cardiology Clinic', icon: Icons.favorite),
-    Clinic(name: 'Neurology Clinic', icon: Icons.healing),
-    Clinic(name: 'Oncology Clinic', icon: Icons.local_hospital),
-    Clinic(name: 'Psychiatry Clinic', icon: Icons.psychology),
-    Clinic(name: 'Radiology Department', icon: Icons.science),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -44,44 +34,39 @@ class _ClinicScreenState extends State<ClinicScreen> {
           crossAxisSpacing: 16.0,
           childAspectRatio: 1.0,
         ),
-        itemCount: clinics.length,
+        itemCount: widget.hospital.clinics.length,
         itemBuilder: (context, index) {
-          return ClinicCard(clinic: clinics[index]);
-        },
-      ),
-    );
-  }
-}
-
-class ClinicCard extends StatelessWidget {
-  final Clinic clinic;
-
-  ClinicCard({required this.clinic});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10.0),
-        onTap: () {
-
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(clinic.icon, size: 50, color: Colors.red),
-            SizedBox(height: 10.0),
-            Text(
-              clinic.name,
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+          return Card(
+            elevation: 4.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
             ),
-          ],
-        ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(10.0),
+              onTap: () {
+
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),
+                child: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+
+                    SizedBox(height: 10.0),
+                    Text(
+                      widget.hospital.clinics[index],
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                    Icon(FontAwesomeIcons.clinicMedical),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

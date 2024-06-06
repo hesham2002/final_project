@@ -3,9 +3,7 @@ class MedicalUser {
   String? nationalId;
   String? jobId;
   String? email;
-
   String? status;
-
   MedicalUser({
     required this.username,
     required this.nationalId,

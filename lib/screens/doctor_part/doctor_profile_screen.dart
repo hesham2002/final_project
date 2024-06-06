@@ -1,15 +1,14 @@
+import 'package:doclink_project/new_models/doctor_model.dart';
 import 'package:doclink_project/widgets/reserved_appointments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:doclink_project/screens/doctor_part/appointment_screen.dart';
-import 'package:doclink_project/helper/assistant_provider.dart';
 
-import '../../models/medical_user_model.dart';
 import '../transform_screen.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
+  DoctorProfileScreen({required this.doctor});
+  Doctor doctor;
   @override
   State<DoctorProfileScreen> createState() => _DoctorProfileScreenState();
 }

@@ -1,4 +1,5 @@
-import 'package:doclink_project/models/patient_user_model.dart';
+
+import 'package:doclink_project/new_models/patient_model.dart';
 import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
 import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
@@ -10,6 +11,7 @@ import '../../services/auth_service.dart';
 import '../../widgets/custom_button.dart';
 
 class PatientRegisterScreen extends StatefulWidget {
+
   @override
   _PatientRegisterScreenState createState() => _PatientRegisterScreenState();
 }
@@ -20,9 +22,15 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
   TextEditingController _passwordController = TextEditingController();
 
   bool isLoading = false;
-  String? id;
   String? email;
   String? password;
+  String? patientId;
+  dynamic patientImg;
+  String? patientName;
+  String? phone;
+  String? medicalHistory;
+  dynamic prescription;
+  dynamic location;
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override
@@ -69,10 +77,10 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                   CustomTextField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter your job ID';
+                        return 'Please enter your  ID';
                       }
                       if (value.length != 8 || int.tryParse(value) == null) {
-                        return 'Job ID should consist of 8 numbers';
+                        return 'ID should consist of 8 numbers';
                       }
                       return null;
                     },
@@ -80,7 +88,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     hintText: 'Id',
                     hiddenText: false,
                     onChanged: (data) {
-                      id = data;
+                      patientId = data;
                     },
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
@@ -132,11 +140,18 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                             password: password!,
                           );
                           if (userCredential.user != null) {
-                            PatientUser patientUser = PatientUser(
-                              email: email,
-                              id: id,
+                            Patient patient = Patient(
+                              location: location,
+                              medicalHistory: medicalHistory!,
+                              patientId:patientId! ,
+                              patientImg:patientImg ,
+                              patientName: patientName!,
+                              phone: phone!,
+                              prescription:prescription ,
+                              email: email!,
+
                             );
-                            await AuthService().savePatientData(patientUser);
+                            await AuthService().savePatientData(patient);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Registration successful'),

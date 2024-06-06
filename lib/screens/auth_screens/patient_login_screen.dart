@@ -1,5 +1,5 @@
 import 'package:doclink_project/screens/auth_screens/patient_register_screen.dart';
-import 'package:doclink_project/screens/search_screen.dart';
+import 'package:doclink_project/screens/search_part/medical_search_screen.dart';
 import 'package:doclink_project/screens/hospital_part/hospital_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +9,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../widgets/custom_button.dart';
 
 class PatientLoginScreen extends StatefulWidget {
+
   @override
   _PatientLoginScreenState createState() => _PatientLoginScreenState();
 }
@@ -156,7 +157,7 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SearchScreen(),
+                              builder: (context) => MedicalServicesSearchScreen(),
                             ),
                           );
                         } on FirebaseAuthException catch (e) {
@@ -205,7 +206,8 @@ class _PatientLoginScreenState extends State<PatientLoginScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.05),
+                  Divider(color: Colors.white,thickness: .5,indent: 15,endIndent: 15,),
+                  SizedBox(height: screenHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

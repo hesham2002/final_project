@@ -198,19 +198,7 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                           if (querySnapshot.docs.isNotEmpty) {
 
                             switch (selectedStatus) {
-                              // case 'Doctor':
-                              //   Navigator.pushReplacement(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //           builder: (context) =>
-                              //               DoctorProfileScreen(
-                              //                   user: MedicalUser.fromJson(
-                              //                       querySnapshot
-                              //                               .docs.first
-                              //                               .data()
-                              //                           as Map<String,
-                              //                               dynamic>))));
-                              //   break;
+
                               case 'Receptionist':
                                 break;
                               case "Doctor's Assistant":
@@ -274,13 +262,7 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.04),
-                  Divider(
-                    color: Colors.white,
-                    thickness: 0,
-                    indent: screenWidth * 0.04,
-                    endIndent: screenWidth * 0.04,
-                  ),
+                  Divider(color: Colors.white,thickness: .5,indent: 15,endIndent: 15,),
                   SizedBox(height: screenHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

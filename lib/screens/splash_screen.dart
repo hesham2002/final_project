@@ -4,6 +4,7 @@ import 'package:doclink_project/screens/intro_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }

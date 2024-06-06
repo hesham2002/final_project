@@ -4,6 +4,7 @@ import 'package:doclink_project/widgets/animated_card.dart';
 import 'package:flutter/material.dart';
 
 class IntroScreen extends StatefulWidget {
+
   @override
   _IntroScreenState createState() => _IntroScreenState();
 }
@@ -24,7 +25,7 @@ class _IntroScreenState extends State<IntroScreen> {
               child: const Animated3DCard(
                 coverImage: 'assets/patient.jpeg',
                 title: 'patients',
-                child: Text("jj"),
+                child: null,
               ),
               onTap: () {
                 Navigator.push(
@@ -34,7 +35,7 @@ class _IntroScreenState extends State<IntroScreen> {
                   ),
                 );
               },
-              //  child:Text("nn"),
+
             ),
             // ),
             const SizedBox(height: 20), // Add some space between the cards

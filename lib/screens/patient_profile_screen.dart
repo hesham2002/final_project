@@ -17,11 +17,14 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        title: Text('Your Profile'),
+        centerTitle: true,
         backgroundColor: Color.fromARGB(255, 30, 30, 84),
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
+          SizedBox(height: 20,),
           ProfileWidget(
             imagePath: user.imagePath,
             onClicked: () async {},
@@ -43,11 +46,7 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
             user.name,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
-          const SizedBox(height: 4),
-          Text(
-            user.email,
-            style: TextStyle(color: Color.fromARGB(255, 63, 57, 57)),
-          )
+
         ],
       );
 
@@ -56,6 +55,8 @@ class _PatientProfileScreenState extends State<PatientProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text('Location',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 30,),
             Text(
               'Medical History',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

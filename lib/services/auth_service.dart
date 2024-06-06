@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doclink_project/new_models/patient_model.dart';
 
 import '../models/medical_user_model.dart';
-import '../models/patient_user_model.dart';
+
 
 class AuthService{
   Future<void> saveUserData(MedicalUser user) async {
@@ -20,25 +21,24 @@ class AuthService{
           usersCollection = FirebaseFirestore.instance.collection('assistant_accounts');
           break;
         default:
-        // Handle unknown status
           return;
       }
 
-      // Add the user data to the appropriate collection
+
       await usersCollection.add(user.toJson());
     } catch (error) {
       print("Error saving user data: $error");
-      // Handle error
+
     }
   }
 
-  Future<void> savePatientData(PatientUser patient) async {
+  Future<void> savePatientData(Patient patient) async {
     try {
       await FirebaseFirestore.instance.collection('patients').add(
           patient.toJson());
     } catch (error) {
       print("Error saving patient data: $error");
-      // Handle error
+
     }
   }
 }

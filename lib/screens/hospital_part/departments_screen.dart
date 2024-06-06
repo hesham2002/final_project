@@ -1,24 +1,18 @@
+import 'package:doclink_project/new_models/hospital_model.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DepartmentsScreen extends StatefulWidget {
-  const DepartmentsScreen({Key? key}) : super(key: key);
-
+   DepartmentsScreen({Key? key,required this.hospital}) : super(key: key);
+  Hospital hospital;
   @override
   State<DepartmentsScreen> createState() => _DepartmentsScreenState();
 }
 
 class _DepartmentsScreenState extends State<DepartmentsScreen> {
-  List<dynamic> catNames = [
-    "Emergency",
-    "Cardiology",
-    "Orthopedics",
-    "Neurology",
-    "Oncology",
-    "Pediatrics",
-    "Gynecology",
-    "ENT (Ear, Nose, Throat)"
-  ];
+
+
+
   List<Icon> catIcons = [
     Icon(
       MdiIcons.alert,
@@ -50,16 +44,7 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
       color: Colors.deepPurpleAccent,
       size: 30,
     ),
-    Icon(
-      MdiIcons.humanFemale,
-      color: Colors.deepPurpleAccent,
-      size: 30,
-    ),
-    Icon(
-      Icons.hearing,
-      color: Colors.deepPurpleAccent,
-      size: 30,
-    ),
+
   ];
 
   @override
@@ -80,7 +65,7 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
       body: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemCount: catNames.length,
+        itemCount: widget.hospital.departments.length,
         itemBuilder: (context, index) {
           return Container(
             margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -102,14 +87,19 @@ class _DepartmentsScreenState extends State<DepartmentsScreen> {
                   child: catIcons[index],
                 ),
                 SizedBox(width: 20),
-                Text(
-                  catNames[index],
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    widget.hospital.departments[index],
+                    style: TextStyle(
+                      color: Colors.black87,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
+
+                    ),
                   ),
                 ),
+
               ],
             ),
           );

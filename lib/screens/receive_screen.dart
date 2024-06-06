@@ -30,22 +30,13 @@ class _ReceivePatientsScreenState extends State<ReceivePatientsScreen> {
               height: 20,
             ),
             _buildOvalCard('Patient Name: '),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-            ),
+           SizedBox(height: 15,),
             _buildOvalCard('ID: '),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-            ),
+            SizedBox(height: 15,),
             _buildOvalCard('Report: '),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-            ),
+
             SizedBox(
-              height: 25,
+              height: 35,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
