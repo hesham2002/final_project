@@ -1,14 +1,15 @@
-import 'package:doclink_project/new_models/doctor_model.dart';
-import 'package:doclink_project/widgets/reserved_appointments.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:doclink_project/screens/chat_part/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import '../../new_models/doctor_model.dart';
+import '../../widgets/reserved_appointments.dart';
 import '../transform_screen.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
-  DoctorProfileScreen({required this.doctor});
-  Doctor doctor;
+  final Doctor doctor;
+
+  const DoctorProfileScreen({super.key, required this.doctor});
+
   @override
   State<DoctorProfileScreen> createState() => _DoctorProfileScreenState();
 }
@@ -28,11 +29,8 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          // Transform Patient Option Icon
-
-          // Notifications Icon
           PopupMenuButton<String>(
-            icon: Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications),
             itemBuilder: (BuildContext context) {
               return dropdownItems.map((String item) {
                 return PopupMenuItem<String>(
@@ -48,195 +46,214 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
             },
           ),
         ],
-        title: Text('Doctor Profile'),
+        title: const Text('Doctor\'s Profile'),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 30, 30, 84),
+        backgroundColor: const Color.fromARGB(255, 30, 30, 84),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(20.0),
-                child: CircleAvatar(
-                  radius: 70,
-                  backgroundImage:
-                      AssetImage('lib/assets/assets_images/doctor3.jpg'),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 20),
+            Center(
+              child: CircleAvatar(
+                radius: 70,
+                backgroundImage: NetworkImage('${widget.doctor.doctorImg}'),
               ),
-              SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Dr. John Doe',
-                      style: TextStyle(
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.doctor.doctorName,
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.black12,
-                          child: IconButton(
-                            icon: Icon(Icons.transform,color: Color.fromARGB(255, 30, 30, 84),), // Adjust the icon to your preference
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => TransformScreen(),
-                                ),
-                              );
-                            },
+                  ),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.black12,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.transform,
+                            color: Color.fromARGB(255, 30, 30, 84),
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TransformScreen(),
+                              ),
+                            );
+                          },
                         ),
-                        SizedBox(width: 25), // Adjust the spacing between icons as needed
-                        CircleAvatar(
-                          backgroundColor: Colors.black12,
-                          child: IconButton(
-                            icon: Icon(FontAwesomeIcons.table,color: Color.fromARGB(255, 30, 30, 84),), // Adjust the icon to your preference
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReservedAppointment(),
-                                ),
-                              );
-                            },
+                      ),
+                      const SizedBox(width: 25),
+                      CircleAvatar(
+                        backgroundColor: Colors.black12,
+                        child: IconButton(
+                          icon: const Icon(
+                            FontAwesomeIcons.table,
+                            color: Color.fromARGB(255, 30, 30, 84),
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                const ReservedAppointment(),
+                              ),
+                            );
+                          },
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Divider(thickness: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Age: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
                     ),
-                  ],
-                ),
+                  ),
+                  Text(
+                    '${widget.doctor.age}',
+                    style: const TextStyle(fontSize: 20, color: Colors.blue),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(thickness: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'About me: ',
 
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.doctor.aboutMe,
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4, // Adjust based on your requirement
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 20,
+            ),
+            const Divider(thickness: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Specialization: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      widget.doctor.specializationName,
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-              Divider(
-                thickness: 2,
+            ),
+            const Divider(thickness: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Hospital: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      widget.doctor.hospitalName ?? 'N/A',
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Age: ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
+            ),
+            const Divider(thickness: 2),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Text(
+                    'My Assistant: ',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Flexible(
+                    child: Text(
+                      widget.doctor.assistantName ?? 'N/A',
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                            patientId: '',
                           ),
                         ),
-                        Text(
-                          '40',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        )
-                      ],
+                      ),
+                      child: const Icon(Icons.chat,
+                          color: Color(0xffFECE4A), size: 30),
                     ),
-                    SizedBox(height: 10),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'About me: ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            'I am a cardiologist with 15 years of experience.',
-                            style: TextStyle(fontSize: 20, color: Colors.blue),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Specialization: ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Cardiologist',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'Hospital: ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'XYZ Hospital',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          'My Assistant: ',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.grey[800],
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Ahmed Kamal',
-                          style: TextStyle(fontSize: 20, color: Colors.blue),
-                        )
-                      ],
-                    ),
-                    Divider(
-                      thickness: 2,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

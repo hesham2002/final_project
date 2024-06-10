@@ -1,6 +1,5 @@
 
 import 'package:doclink_project/new_models/patient_model.dart';
-import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
 import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,7 +23,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
   bool isLoading = false;
   String? email;
   String? password;
-  String? patientId;
+  String? id;
   dynamic patientImg;
   String? patientName;
   String? phone;
@@ -43,7 +42,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
       child: Scaffold(
         body: Container(
           height: screenHeight,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xff020310),
@@ -64,7 +63,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
 
                   SizedBox(height: screenHeight * 0.2),
 
-                  Text(
+                  const Text(
                     'Create an Account',
                     style: TextStyle(
                       fontSize: 24,
@@ -88,7 +87,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     hintText: 'Id',
                     hiddenText: false,
                     onChanged: (data) {
-                      patientId = data;
+                      id = data;
                     },
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
@@ -143,7 +142,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                             Patient patient = Patient(
                               location: location,
                               medicalHistory: medicalHistory!,
-                              patientId:patientId! ,
+                              id:id! ,
                               patientImg:patientImg ,
                               patientName: patientName!,
                               phone: phone!,
@@ -191,7 +190,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Already have an account?',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -208,7 +207,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                         child: Text(
                           'Log In',
                           style: TextStyle(
-                            color: Color(0xffC7EDE6),
+                            color: const Color(0xffC7EDE6),
                             fontSize: screenWidth * 0.04,
                           ),
                         ),

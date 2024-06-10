@@ -1,25 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:doclink_project/screens/hospital_part/hospital_screen.dart';
 import 'package:doclink_project/screens/patient_profile_screen.dart';
 import 'package:doclink_project/screens/search_part/search_widget.dart';
-import 'package:flutter/material.dart';
-
-
-import '../../new_models/doctor_model.dart';
-import '../../new_models/hospital_model.dart';
-import '../../services/api_service.dart';
+import 'package:doclink_project/new_models/hospital_model.dart';
+import 'package:doclink_project/services/api_service.dart';
 
 class MedicalServicesSearchScreen extends StatefulWidget {
-
   @override
   _MedicalServicesSearchScreenState createState() =>
       _MedicalServicesSearchScreenState();
-
 }
 
 class _MedicalServicesSearchScreenState
     extends State<MedicalServicesSearchScreen> {
   TextEditingController _searchController = TextEditingController();
-
   String? selectedValue1;
   List<Hospital> hospitals = [];
 
@@ -27,6 +21,12 @@ class _MedicalServicesSearchScreenState
   void initState() {
     super.initState();
     fetchHospitals();
+  }
+
+  Future<Hospital> _fetchHospitalDetails(String hospitalId) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return hospitals
+        .firstWhere((hospital) => hospital.id.toString() == hospitalId);
   }
 
   Future<void> fetchHospitals() async {
@@ -40,9 +40,11 @@ class _MedicalServicesSearchScreenState
       print('Error fetching hospitals: $e');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    var isLargeScreen = screenWidth > 600;
 
     return Scaffold(
       appBar: AppBar(
@@ -57,76 +59,70 @@ class _MedicalServicesSearchScreenState
                       builder: (context) => PatientProfileScreen()),
                 );
               },
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 child: Icon(Icons.person),
               ),
             ),
           ),
         ],
-        title: Text('Medical Services'),
+        title: const Text('Medical Services'),
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 30, 30, 84),
+        backgroundColor: const Color.fromARGB(255, 30, 30, 84),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 10),
               InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen(),));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SearchScreen(),
+                    ),
+                  );
                 },
                 child: Container(
                   height: 60,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        30.0),
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
+                    borderRadius: BorderRadius.circular(30.0),
+                    border: Border.all(color: Colors.grey),
                   ),
-                  child: Row(
-
+                  child: const Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(
-                            left:
-                                15.0),
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                        ),
+                        padding: EdgeInsets.only(left: 15.0),
+                        child: Icon(Icons.search, color: Colors.grey),
                       ),
                       Expanded(
-
                         child: Text('Search for hospitals, clinics, etc.'),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   String searchQuery = _searchController.text;
 
                 },
-                child: Text(
+                child: const Text(
                   'Search',
                   style: TextStyle(fontSize: 18),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 30, 30, 84),
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  backgroundColor: const Color.fromARGB(255, 30, 30, 84),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
               ),
-              SizedBox(height: 30),
-              Text(
+              const SizedBox(height: 30),
+              const Text(
                 'Suggested Results',
                 style: TextStyle(
                   fontSize: 20,
@@ -135,17 +131,29 @@ class _MedicalServicesSearchScreenState
                 ),
                 textAlign: TextAlign.left,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               DropdownButtonFormField<String>(
-                hint: Text('Select Hospital'),
+                hint: const Text('Select Hospital'),
                 value: selectedValue1,
                 onChanged: (newValue) {
                   setState(() {
                     selectedValue1 = newValue;
-                    // Navigate to Hospital Screen
-                    if (newValue != null) {
-                      Hospital selectedHospital = hospitals.firstWhere(
-                              (hospital) => hospital.id.toString() == newValue);
+                  });
+
+                  if (newValue != null) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+
+                    _fetchHospitalDetails(newValue).then((selectedHospital) {
+                      Navigator.pop(
+                          context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -154,8 +162,8 @@ class _MedicalServicesSearchScreenState
                           ),
                         ),
                       );
-                    }
-                  });
+                    });
+                  }
                 },
                 items: hospitals.map((hospital) {
                   return DropdownMenuItem<String>(
@@ -169,13 +177,12 @@ class _MedicalServicesSearchScreenState
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 16.0,
                 ),
               ),
             ],
-
           ),
         ),
       ),

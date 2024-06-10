@@ -5,20 +5,22 @@ Doctor doctorFromJson(String str) => Doctor.fromJson(json.decode(str));
 String doctorToJson(Doctor data) => json.encode(data.toJson());
 
 class Doctor {
-  String doctorId;
+  dynamic jobId;
+  dynamic nationalId;
   dynamic doctorImg;
-  String email;
-  String doctorName;
-  int age;
-  String aboutMe;
-  String specializationName;
+  dynamic email;
+  dynamic doctorName;
+  dynamic age;
+  dynamic aboutMe;
+  dynamic specializationName;
   dynamic hospitalName;
   dynamic assistantName;
-  String specialization;
+  dynamic specialization;
   dynamic hospital;
 
   Doctor({
-     required this.doctorId,
+    this.nationalId,
+     required this.jobId,
      this.doctorImg,
      required this.email,
      required this.doctorName,
@@ -32,7 +34,8 @@ class Doctor {
   });
 
   factory Doctor.fromJson(Map<String, dynamic> json) => Doctor(
-    doctorId: json["doctor_id"],
+    nationalId: json['nationalId'],
+    jobId: json["jobId"],
     doctorImg: json["doctorIMG"],
     email: json["email"],
     doctorName: json["doctorName"],
@@ -46,7 +49,8 @@ class Doctor {
   );
 
   Map<String, dynamic> toJson() => {
-    "doctor_id": doctorId,
+    "nationalId":nationalId,
+    "jobId": jobId,
     "doctorIMG": doctorImg,
     "email": email,
     "doctorName": doctorName,

@@ -4,7 +4,7 @@ Patient patientFromJson(String str) => Patient.fromJson(json.decode(str));
 String welcomeToJson(Patient data) => json.encode(data.toJson());
 
 class Patient {
-  String patientId;
+  String? id;
   dynamic patientImg;
   String patientName;
   String phone;
@@ -14,7 +14,7 @@ class Patient {
   dynamic location;
 
   Patient({
-    required this.patientId,
+    this.id,
     required this.patientImg,
     required this.patientName,
     required this.phone,
@@ -25,7 +25,7 @@ class Patient {
   });
 
   factory Patient.fromJson(Map<String, dynamic> json) => Patient(
-    patientId: json["patient_id"],
+    id: json["id"],
     patientImg: json["patientIMG"],
     patientName: json["patientName"],
     phone: json["phone"],
@@ -36,7 +36,7 @@ class Patient {
   );
 
   Map<String, dynamic> toJson() => {
-    "patient_id": patientId,
+    "id": id,
     "patientIMG": patientImg,
     "patientName": patientName,
     "phone": phone,

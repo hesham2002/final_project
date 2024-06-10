@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class ReceivePatientsScreen extends StatefulWidget {
   @override
@@ -6,6 +8,18 @@ class ReceivePatientsScreen extends StatefulWidget {
 }
 
 class _ReceivePatientsScreenState extends State<ReceivePatientsScreen> {
+  File? _image; // To store the picked image
+
+  Future<void> _pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +44,10 @@ class _ReceivePatientsScreenState extends State<ReceivePatientsScreen> {
               height: 20,
             ),
             _buildOvalCard('Patient Name: '),
-           SizedBox(height: 15,),
+            SizedBox(height: 15,),
             _buildOvalCard('ID: '),
             SizedBox(height: 15,),
-            _buildOvalCard('Report: '),
+            _buildReportCard(),  // Update this line to call _buildReportCard
 
             SizedBox(
               height: 35,
@@ -98,6 +112,49 @@ class _ReceivePatientsScreenState extends State<ReceivePatientsScreen> {
         label,
         textAlign: TextAlign.start,
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+      ),
+    );
+  }
+
+  Widget _buildReportCard() {
+    return Center(
+      child: GestureDetector(
+        onTap: _pickImage,
+        child: SizedBox(
+          width: 180, // Set your desired width here
+          child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.grey[400]!), // Add border
+            ),
+            height: 200,
+            alignment: Alignment.center,
+            child: _image == null
+                ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.image, size: 50, color: Colors.grey[700]),
+                SizedBox(height: 10),
+                Text(
+                  'Tap to open report',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Colors.grey[700]),
+                ),
+              ],
+            )
+                : ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.file(
+                _image!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../../models/medical_user_model.dart';
+
 import '../../widgets/custom_button.dart';
 import '../doctor_part/doctor_profile_screen.dart';
 

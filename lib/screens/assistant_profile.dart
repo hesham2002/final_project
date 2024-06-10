@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../helper/assistant_provider.dart';
-import 'patient_list_screen.dart';
+import 'chat_part/patient_list_screen.dart';
 
 class AssistantProfilePage extends StatefulWidget {
   @override
@@ -18,15 +18,33 @@ class _AssistantProfilePageState extends State<AssistantProfilePage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 30, 30, 84),
-        title: Text('Assistant Profile'),
+        title: Text('Assistant\'s Profile'),
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 25),
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(assistantProvider.imageUrl),
+            Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: Color.fromARGB(255, 30, 30, 84),
+                    radius: 50,
+                    child: Icon(Icons.person, color: Colors.white, size: 50),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 20),
             Text(
@@ -39,68 +57,88 @@ class _AssistantProfilePageState extends State<AssistantProfilePage> {
               style: TextStyle(fontSize: 18, color: Colors.grey[700]),
             ),
             SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () async {
-                final date = await _selectDate(context);
-                if (date != null) {
-                  final description = await _showInputDialog(context, 'Enter Schedule Description');
-                  if (description != null) {
-                    assistantProvider.addSchedule(date, description);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Schedule added')),
-                    );
-                  }
-                }
-              },
-              icon: Icon(FontAwesomeIcons.calendarPlus),
-              label: Text('Add Schedule'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 30, 30, 84), // Button background color
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                textStyle: TextStyle(fontSize: 16),
-              ),
+            _buildButton(
+              onPressed: () => _addSchedule(context),
+              icon: FontAwesomeIcons.calendarPlus,
+              label: 'Add Schedule',
             ),
             SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () async {
-                final patientName = await _showInputDialog(context, 'Enter Patient Name');
-                if (patientName != null) {
-                  final date = await _selectDate(context);
-                  if (date != null) {
-                    assistantProvider.reserveAppointment(patientName, date);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Appointment reserved')),
-                    );
-                  }
-                }
-              },
-              icon: Icon(FontAwesomeIcons.calendarCheck),
-              label: Text('Reserve Appointment'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 30, 30, 84), // Button background color
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                textStyle: TextStyle(fontSize: 16),
-              ),
+            _buildButton(
+              onPressed: () => _reserveAppointment(context),
+              icon: FontAwesomeIcons.calendarCheck,
+              label: 'Reserve Appointment',
             ),
             SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PatientListScreen()),
-                );
-              },
-              icon: Icon(FontAwesomeIcons.comments),
-              label: Text('Chat with Patients'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 30, 30, 84), // Button background color
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                textStyle: TextStyle(fontSize: 16),
-              ),
+            _buildButton(
+              onPressed: () => _navigateToChat(context),
+              icon: FontAwesomeIcons.comments,
+              label: 'Chat with Patients',
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildButton({required VoidCallback onPressed, required IconData icon, required String label}) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon),
+        label: Text(label),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 30, 30, 84),
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          textStyle: TextStyle(fontSize: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _addSchedule(BuildContext context) async {
+    final date = await _selectDate(context);
+    if (date != null) {
+      final description = await _showInputDialog(context, 'Enter Schedule Description');
+      if (description != null) {
+        Provider.of<AssistantProvider>(context, listen: false).addSchedule(date, description);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Schedule added')),
+        );
+      }
+    }
+  }
+
+  void _reserveAppointment(BuildContext context) async {
+    final patientName = await _showInputDialog(context, 'Enter Patient Name');
+    if (patientName != null) {
+      final date = await _selectDate(context);
+      if (date != null) {
+        Provider.of<AssistantProvider>(context, listen: false).reserveAppointment(patientName, date);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Appointment reserved')),
+        );
+      }
+    }
+  }
+
+  void _navigateToChat(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PatientChatList()),
     );
   }
 
@@ -134,7 +172,7 @@ class _AssistantProfilePageState extends State<AssistantProfilePage> {
                 Navigator.of(context).pop(input);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 30, 30, 84), // Button background color
+                backgroundColor: Color.fromARGB(255, 30, 30, 84),
               ),
             ),
           ],

@@ -1,7 +1,6 @@
 import 'package:doclink_project/models/medical_user_model.dart';
 import 'package:doclink_project/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../../widgets/custom_button.dart';
@@ -9,6 +8,8 @@ import '../../widgets/custom_textfield.dart';
 import 'medical_login_screen.dart';
 
 class MedicalRegisterScreen extends StatefulWidget {
+  const MedicalRegisterScreen({super.key});
+
   @override
   _MedicalRegisterScreenState createState() => _MedicalRegisterScreenState();
 }
@@ -38,7 +39,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
       child: Scaffold(
         body: Container(
           height: screenHeight,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xff020310),
@@ -56,10 +57,10 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ListView(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Create an Account',
                     style: TextStyle(
                       fontSize: 24,
@@ -155,8 +156,8 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(height: screenHeight * 0.02),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10),
                     child: Text(
                       'Select Status:',
                       style: TextStyle(color: Colors.white, fontSize: 18),
@@ -176,7 +177,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                           });
                         },
                       ),
-                      Text(
+                      const Text(
                         'Doctor',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -190,7 +191,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                           });
                         },
                       ),
-                      Text(
+                      const Text(
                         'Receptionist',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -204,7 +205,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                           });
                         },
                       ),
-                      Text(
+                      const Text(
                         "Doctor's Assistant",
                         style: TextStyle(color: Colors.white),
                       ),
@@ -279,7 +280,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'already have an account?',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -296,7 +297,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                         child: Text(
                           'Log In',
                           style: TextStyle(
-                            color: Color(0xffC7EDE6),
+                            color: const Color(0xffC7EDE6),
                             fontSize: screenWidth * 0.04,
                           ),
                         ),
