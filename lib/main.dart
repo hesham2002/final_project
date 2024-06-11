@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: false),
-        home: MedicalLoginScreen(),
+        home: SplashScreen(),
 
       ),
     );
