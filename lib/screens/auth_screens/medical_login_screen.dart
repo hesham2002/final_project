@@ -1,20 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doclink_project/new_models/doctor_model.dart';
 import 'package:doclink_project/screens/assistant_profile.dart';
 import 'package:doclink_project/screens/auth_screens/medical_register_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/custom_button.dart';
 import '../doctor_part/doctor_profile_screen.dart';
+import 'package:doclink_project/services/auth_service.dart';
 
 class MedicalLoginScreen extends StatefulWidget {
+  const MedicalLoginScreen({super.key});
+
   @override
-  _DoctorLoginScreenState createState() => _DoctorLoginScreenState();
+  _MedicalLoginScreenState createState() => _MedicalLoginScreenState();
 }
 
-class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
+class _MedicalLoginScreenState extends State<MedicalLoginScreen> {
   final TextEditingController _jobIdController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -23,11 +27,12 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
   String? jobId;
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
-  String? selectedStatus;
+  String _selectedStatus = 'Doctor';
+
   Future<void> _resetPassword() async {
     if (_emailController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Please enter your email to reset your password'),
         ),
       );
@@ -35,9 +40,10 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
     }
 
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text);
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: _emailController.text);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Password reset email sent'),
         ),
       );
@@ -62,6 +68,17 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
       );
     }
   }
+
+  Future<void> _saveLoginState(bool isLoggedIn) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', isLoggedIn);
+  }
+
+  Future<bool> _getLoginState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isLoggedIn') ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -72,7 +89,7 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
       child: Scaffold(
         body: Container(
           height: screenHeight,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color(0xff020310),
@@ -91,7 +108,7 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
               child: ListView(
                 children: [
                   SizedBox(height: screenHeight * 0.15),
-                  Text(
+                  const Text(
                     'Login to your account now',
                     style: TextStyle(
                       fontSize: 25,
@@ -149,6 +166,61 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(height: screenHeight * 0.02),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Select Status:',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.01),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                        activeColor: Colors.white,
+                        value: 'Doctor',
+                        groupValue: _selectedStatus,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedStatus = value!;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'Doctor',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Radio(
+                        value: 'Receptionist',
+                        activeColor: Colors.white,
+                        groupValue: _selectedStatus,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedStatus = value!;
+                          });
+                        },
+                      ),
+                      const Text(
+                        'Receptionist',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Radio(
+                        value: "Doctor's Assistant",
+                        activeColor: Colors.white,
+                        groupValue: _selectedStatus,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedStatus = value!;
+                          });
+                        },
+                      ),
+                      const Text(
+                        "Assistant",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                   CustomButton(
                     buttonName: 'Log In',
                     onTap: () async {
@@ -163,43 +235,28 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                             email: email!,
                             password: password!,
                           );
+                          await _saveLoginState(true);
+                          DocumentSnapshot? userDoc =
+                              await AuthService().getUserData(
+                            _emailController.text,
+                            _jobIdController.text,
+                            _selectedStatus,
+                          );
 
-                          CollectionReference usersCollection;
-
-                          // Fetch the user document from the appropriate Firestore collection based on user's role
-                          switch (selectedStatus) {
-                            case 'Doctor':
-                              usersCollection = FirebaseFirestore.instance
-                                  .collection('doctor_accounts');
-                              selectedStatus = 'Doctor';
-                              break;
-                            case 'Receptionist':
-                              usersCollection = FirebaseFirestore.instance
-                                  .collection('receptionist_accounts');
-                              selectedStatus = 'Receptionist';
-                              break;
-                            case "Doctor's Assistant":
-                              usersCollection = FirebaseFirestore.instance
-                                  .collection('assistant_accounts');
-                              selectedStatus = "Doctor's Assistant";
-                              break;
-                            default:
-                              // Handle unknown status
-                              return;
-                          }
-
-
-                          QuerySnapshot querySnapshot = await usersCollection
-                              .where('email', isEqualTo: _emailController.text)
-                              .where('jobId', isEqualTo: _jobIdController.text)
-                              .get();
-
-
-                          if (querySnapshot.docs.isNotEmpty) {
-
-                            switch (selectedStatus) {
-
+                          if (userDoc != null) {
+                            // Handle navigation based on user role
+                            switch (_selectedStatus) {
+                              case 'Doctor':
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DoctorProfileScreen(
+                                              doctor: Doctor(),
+                                            ))); // Pass necessary data
+                                break;
                               case 'Receptionist':
+                                // Add navigation to ReceptionistProfileScreen here
                                 break;
                               case "Doctor's Assistant":
                                 Navigator.pushReplacement(
@@ -207,13 +264,15 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             AssistantProfilePage(
-
-                                            )));
+                                              userDocId: '',
+                                            ))); // Pass necessary data
+                                break;
                             }
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    'User not found or incorrect credentials')));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'User not found or incorrect credentials')));
                           }
                         } on FirebaseAuthException catch (e) {
                           String errorMessage = 'An error occurred';
@@ -244,7 +303,7 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                         });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('Please insert correct data'),
                           ),
                         );
@@ -256,18 +315,23 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                     alignment: Alignment.center,
                     child: TextButton(
                       onPressed: _resetPassword,
-                      child: Text(
+                      child: const Text(
                         'Forgot Password?',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
-                  Divider(color: Colors.white,thickness: .5,indent: 15,endIndent: 15,),
+                  const Divider(
+                    color: Colors.white,
+                    thickness: .5,
+                    indent: 15,
+                    endIndent: 15,
+                  ),
                   SizedBox(height: screenHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Don\'t have an account?',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -277,14 +341,15 @@ class _DoctorLoginScreenState extends State<MedicalLoginScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MedicalRegisterScreen(),
+                              builder: (context) =>
+                                  const MedicalRegisterScreen(),
                             ),
                           );
                         },
                         child: Text(
                           'Sign Up',
                           style: TextStyle(
-                            color: Color(0xffC7EDE6),
+                            color: const Color(0xffC7EDE6),
                             fontSize: screenWidth * 0.04,
                           ),
                         ),

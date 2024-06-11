@@ -70,7 +70,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 children: [
                   Flexible(
                     child: Text(
-                      widget.doctor.doctorName,
+                      widget.doctor.doctorName!,
                       style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -160,7 +160,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   ),
                   Expanded(
                     child: Text(
-                      widget.doctor.aboutMe,
+                      widget.doctor.aboutMe!,
                       style: const TextStyle(fontSize: 20, color: Colors.blue),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 4, // Adjust based on your requirement
@@ -184,7 +184,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                   ),
                   Flexible(
                     child: Text(
-                      widget.doctor.specializationName,
+                      widget.doctor.specializationName!,
                       style: const TextStyle(fontSize: 20, color: Colors.blue),
                       overflow: TextOverflow.ellipsis,
                     ),

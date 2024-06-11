@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:doclink_project/screens/hospital_part/hospital_screen.dart';
 import 'package:doclink_project/screens/patient_profile_screen.dart';
@@ -59,9 +60,10 @@ class _MedicalServicesSearchScreenState
                       builder: (context) => PatientProfileScreen()),
                 );
               },
-              child: const CircleAvatar(
-                child: Icon(Icons.person),
+              child: CircleAvatar(
+
               ),
+
             ),
           ),
         ],

@@ -1,4 +1,4 @@
-import 'package:doclink_project/models/medical_user_model.dart';
+import 'package:doclink_project/new_models/medical_user_model.dart';
 import 'package:doclink_project/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -227,6 +227,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                           );
                           if (userCredential.user != null) {
                             MedicalUser medicalUser = MedicalUser(
+                              uid: userCredential.user!.uid,
                               username: username,
                               nationalId: nationalId,
                               jobId: jobId,
@@ -234,6 +235,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                               status: _selectedStatus,
                             );
                             await AuthService().saveUserData(medicalUser);
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Registration successful'),
@@ -252,7 +254,7 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                             errorMessage = 'The password provided is too weak';
                           } else if (e.code == 'email-already-in-use') {
                             errorMessage =
-                                'The account already exists for that email';
+                            'The account already exists for that email';
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(errorMessage)),
@@ -269,6 +271,8 @@ class _MedicalRegisterScreenState extends State<MedicalRegisterScreen> {
                       }
                     },
                   ),
+
+
                   SizedBox(height: screenHeight * 0.04),
                   Divider(
                     color: Colors.white,

@@ -1,6 +1,7 @@
 import 'package:doclink_project/screens/assistant_profile.dart';
 import 'package:doclink_project/screens/auth_screens/medical_login_screen.dart';
 import 'package:doclink_project/screens/auth_screens/medical_register_screen.dart';
+import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/screens/auth_screens/patient_register_screen.dart';
 import 'package:doclink_project/screens/chat_part/chat_screen.dart';
 import 'package:doclink_project/screens/doctor_part/appointment_screen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: false),
-        home: AssistantProfilePage(),
+        home: MedicalLoginScreen(),
 
       ),
     );

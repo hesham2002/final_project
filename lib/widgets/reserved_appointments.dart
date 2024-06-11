@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../helper/assistant_provider.dart';
 
 class ReservedAppointment extends StatefulWidget {
@@ -12,6 +11,12 @@ class ReservedAppointment extends StatefulWidget {
 }
 
 class _ReservedAppointmentState extends State<ReservedAppointment> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<AssistantProvider>(context, listen: false).fetchAppointments();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

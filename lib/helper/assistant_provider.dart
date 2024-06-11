@@ -1,58 +1,86 @@
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AssistantProvider with ChangeNotifier {
-  String _name = "John Doe";
-  String _doctorName = "Dr. Smith";
-  String _imageUrl = "https://via.placeholder.com/150";
-  Map<String, List<Message>> _chats = {};
-  List<Schedule> _schedules = [];
-  List<Appointment> _appointments = [];
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String get name => _name;
-  String get doctorName => _doctorName;
-  String get imageUrl => _imageUrl;
-  Map<String, List<Message>> get chats => _chats;
-  List<Schedule> get schedules => _schedules;
+  List<Appointment> _appointments = [];
+  String name = 'Assistant Name';
+  String doctorName = 'Doctor Name';
+  Map<String, List<Message>> _chats = {}; // Added chats map
+
   List<Appointment> get appointments => _appointments;
 
-  void addMessage(String patientId, String text, bool isAssistant) {
-    final message = Message(
-      id: Uuid().v4(),
-      text: text,
-      isAssistant: isAssistant,
-      timestamp: DateTime.now(),
-    );
-    if (_chats[patientId] == null) {
-      _chats[patientId] = [];
+  Future<void> fetchAppointments() async {
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      final assistantDoc = await _firestore.collection('assistants').doc(user.uid).get();
+      final doctorId = assistantDoc.data()?['doctorId'];
+
+      if (doctorId != null) {
+        final appointmentSnapshot = await _firestore.collection('doctors')
+            .doc(doctorId)
+            .collection('appointments')
+            .get();
+
+        _appointments = appointmentSnapshot.docs.map((doc) {
+          return Appointment(
+            patientName: doc.data()['patientName'],
+            date: (doc.data()['date'] as Timestamp).toDate(),
+          );
+        }).toList();
+        notifyListeners();
+      }
     }
-    _chats[patientId]!.add(message);
-    notifyListeners();
   }
 
+  Future<void> reserveAppointment(String patientName, DateTime date) async {
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      final assistantDoc = await _firestore.collection('assistants').doc(user.uid).get();
+      final doctorId = assistantDoc.data()?['doctorId'];
+
+      if (doctorId != null) {
+        final appointment = {
+          'patientName': patientName,
+          'date': date,
+        };
+
+        await _firestore.collection('doctors')
+            .doc(doctorId)
+            .collection('appointments')
+            .add(appointment);
+
+        // Update local list
+        _appointments.add(Appointment(patientName: patientName, date: date));
+        notifyListeners();
+      }
+    }
+  }
+
+  // Method to get messages for a particular patient
   List<Message> getMessages(String patientId) {
     return _chats[patientId] ?? [];
   }
 
-  void addSchedule(DateTime date, String description) {
-    final schedule = Schedule(
-      id: Uuid().v4(),
-      date: date,
-      description: description,
-    );
-    _schedules.add(schedule);
-    notifyListeners();
+  // Add schedule method (if needed)
+  Future<void> addSchedule(DateTime date, String description) async {
+    // Implementation here...
   }
 
-  void reserveAppointment(String patientName, DateTime date) {
-    final appointment = Appointment(
-      id: Uuid().v4(),
-      patientName: patientName,
-      date: date,
-    );
-    _appointments.add(appointment);
-    notifyListeners();
+  // Add message method (if needed)
+  Future<void> addMessage(String patientId, String text, bool isAssistant) async {
+    // Implementation here...
   }
+}
+
+class Appointment {
+  final String patientName;
+  final DateTime date;
+
+  Appointment({required this.patientName, required this.date});
 }
 
 class Message {
@@ -66,29 +94,5 @@ class Message {
     required this.text,
     required this.isAssistant,
     required this.timestamp,
-  });
-}
-
-class Schedule {
-  final String id;
-  final DateTime date;
-  final String description;
-
-  Schedule({
-    required this.id,
-    required this.date,
-    required this.description,
-  });
-}
-
-class Appointment {
-  final String id;
-  final String patientName;
-  final DateTime date;
-
-  Appointment({
-    required this.id,
-    required this.patientName,
-    required this.date,
   });
 }

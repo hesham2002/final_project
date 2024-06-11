@@ -71,11 +71,11 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         child: Icon(Icons.person, color: Colors.white),
                       ),
                       title: Text(
-                        doctor.doctorName,
+                        doctor.doctorName!,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        doctor.specializationName,
+                        doctor.specializationName!,
                         style: TextStyle(fontSize: 14),
                       ),
                       trailing: Icon(Icons.arrow_forward_ios),

@@ -1,4 +1,3 @@
-
 import 'package:doclink_project/new_models/patient_model.dart';
 import 'package:doclink_project/screens/auth_screens/patient_login_screen.dart';
 import 'package:doclink_project/widgets/custom_textfield.dart';
@@ -10,26 +9,24 @@ import '../../services/auth_service.dart';
 import '../../widgets/custom_button.dart';
 
 class PatientRegisterScreen extends StatefulWidget {
-
   @override
   _PatientRegisterScreenState createState() => _PatientRegisterScreenState();
 }
 
 class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
-  TextEditingController _idController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController(); // Add TextEditingController for username
+  final TextEditingController _idController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool isLoading = false;
   String? email;
   String? password;
-  String? id;
-  dynamic patientImg;
-  String? patientName;
-  String? phone;
-  String? medicalHistory;
-  dynamic prescription;
-  dynamic location;
+  String? patientId;
+  String? userName;
+  String? phoneNumber;
+  String? location;
+  String? image;
   GlobalKey<FormState> formKey = GlobalKey();
 
   @override
@@ -60,9 +57,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ListView(
                 children: [
-
                   SizedBox(height: screenHeight * 0.2),
-
                   const Text(
                     'Create an Account',
                     style: TextStyle(
@@ -76,18 +71,34 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                   CustomTextField(
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter your  ID';
+                        return 'Please enter your username';
                       }
-                      if (value.length != 8 || int.tryParse(value) == null) {
-                        return 'ID should consist of 8 numbers';
+                      return null;
+                    },
+                    controller: _usernameController,
+                    hintText: 'Username', // Set hint text for username
+                    hiddenText: false,
+                    onChanged: (data) {
+                      userName = data; // Update username variable
+                    },
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  CustomTextField(
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your ID';
+                      }
+                      if (value.length != 14 || int.tryParse(value) == null) {
+                        return 'ID should consist of 14 numbers';
                       }
                       return null;
                     },
                     controller: _idController,
-                    hintText: 'Id',
+                    hintText: 'ID',
                     hiddenText: false,
                     onChanged: (data) {
-                      id = data;
+                      patientId = data; // Update patientId variable
                     },
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
@@ -102,10 +113,10 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     hintText: 'Email',
                     hiddenText: false,
                     onChanged: (data) {
-                      email = data;
+                      email = data; // Update email variable
                     },
-                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                     controller: _emailController,
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
                   SizedBox(height: screenHeight * 0.02),
                   CustomTextField(
@@ -118,7 +129,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     hintText: 'Password',
                     hiddenText: true,
                     onChanged: (data) {
-                      password = data;
+                      password = data; // Update password variable
                     },
                     controller: _passwordController,
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
@@ -132,24 +143,21 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                           isLoading = true;
                         });
                         try {
-                          UserCredential userCredential = await FirebaseAuth
-                              .instance
-                              .createUserWithEmailAndPassword(
+                          UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: email!,
                             password: password!,
                           );
                           if (userCredential.user != null) {
+                            // Create a Patient object using the entered data
                             Patient patient = Patient(
-                              location: location,
-                              medicalHistory: medicalHistory!,
-                              id:id! ,
-                              patientImg:patientImg ,
-                              patientName: patientName!,
-                              phone: phone!,
-                              prescription:prescription ,
                               email: email!,
-
+                              image: image ?? '', // Set your image here
+                              username: userName ?? '', // Use the userName variable
+                              patientId: patientId!,
+                              phoneNumber: phoneNumber ?? '',
+                              location: location ?? '',
                             );
+                            // Save the patient data using the authentication service
                             await AuthService().savePatientData(patient);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -162,14 +170,19 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                 builder: (context) => PatientLoginScreen(),
                               ),
                             );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to create user'),
+                              ),
+                            );
                           }
                         } on FirebaseAuthException catch (e) {
                           String errorMessage = 'An error occurred';
                           if (e.code == 'weak-password') {
                             errorMessage = 'The password provided is too weak';
                           } else if (e.code == 'email-already-in-use') {
-                            errorMessage =
-                                'The account already exists for that email';
+                            errorMessage = 'The account already exists for that email';
                           }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(errorMessage)),
@@ -186,6 +199,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                       }
                     },
                   ),
+
                   SizedBox(height: screenHeight * 0.05),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

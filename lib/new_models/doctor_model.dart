@@ -20,16 +20,16 @@ class Doctor {
 
   Doctor({
     this.nationalId,
-     required this.jobId,
+      this.jobId,
      this.doctorImg,
-     required this.email,
-     required this.doctorName,
-     required this.age,
-     required this.aboutMe,
-     required this.specializationName,
+      this.email,
+      this.doctorName,
+      this.age,
+      this.aboutMe,
+      this.specializationName,
      this.hospitalName,
      this.assistantName,
-     required this.specialization,
+      this.specialization,
      this.hospital,
   });
 

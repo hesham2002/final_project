@@ -1,48 +1,53 @@
 import 'dart:convert';
-Patient patientFromJson(String str) => Patient.fromJson(json.decode(str));
-
-String welcomeToJson(Patient data) => json.encode(data.toJson());
 
 class Patient {
-  String? id;
-  dynamic patientImg;
-  String patientName;
-  String phone;
-  String medicalHistory;
-  String email;
-  dynamic prescription;
-  dynamic location;
+  final String email;
+  final String image;
+  final String username;
+  final String patientId;
+  final String phoneNumber;
+  final String location; // New variable for location
 
   Patient({
-    this.id,
-    required this.patientImg,
-    required this.patientName,
-    required this.phone,
-    required this.medicalHistory,
     required this.email,
-    required this.prescription,
+    required this.image,
+    required this.username,
+    required this.patientId,
+    required this.phoneNumber,
     required this.location,
   });
 
-  factory Patient.fromJson(Map<String, dynamic> json) => Patient(
-    id: json["id"],
-    patientImg: json["patientIMG"],
-    patientName: json["patientName"],
-    phone: json["phone"],
-    medicalHistory: json["medicalHistory"],
-    email: json["email"],
-    prescription: json["prescription"],
-    location: json["location"],
-  );
+  // Factory method to create a Patient from JSON
+  factory Patient.fromJson(Map<String, dynamic> json) {
+    return Patient(
+      email: json['email'],
+      image: json['image'],
+      username: json['username'],
+      patientId: json['patientId'],
+      phoneNumber: json['phoneNumber'],
+      location: json['location'], // Initialize location from JSON
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "patientIMG": patientImg,
-    "patientName": patientName,
-    "phone": phone,
-    "medicalHistory": medicalHistory,
-    "email": email,
-    "prescription": prescription,
-    "location": location,
-  };
+  // Method to convert a Patient instance to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'image': image,
+      'username': username,
+      'patientId': patientId,
+      'phoneNumber': phoneNumber,
+      'location': location, // Add location to JSON
+    };
+  }
+
+  // Method to convert a Patient instance to a JSON string
+  String toJsonString() {
+    return jsonEncode(toJson());
+  }
+
+  // Factory method to create a Patient from a JSON string
+  factory Patient.fromJsonString(String jsonString) {
+    return Patient.fromJson(jsonDecode(jsonString));
+  }
 }

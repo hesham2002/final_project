@@ -1,72 +1,68 @@
-import 'package:doclink_project/models/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../widgets/numbers_widget.dart';
-import '../widgets/profile_widget.dart';
-import 'Utils/user_preferences.dart';
 
-class PatientProfileScreen extends StatefulWidget {
-  @override
-  _PatientProfileScreenState createState() => _PatientProfileScreenState();
-}
+class PatientProfileScreen extends StatelessWidget {
+  const PatientProfileScreen({Key? key}) : super(key: key);
 
-class _PatientProfileScreenState extends State<PatientProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Profile'),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 30, 30, 84),
       ),
-      body: ListView(
-        physics: BouncingScrollPhysics(),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 70,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Ahmed Ali',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            ProfileInfoRow(title: 'Id', value: '30203182400834'),
+            ProfileInfoRow(title: 'Phone', value: '01151864213'),
+            ProfileInfoRow(title: 'Mail', value: 'hesham@gmail.com'),
+            ProfileInfoRow(title: 'Location', value: 'Cairo, Egypt'),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileInfoRow extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const ProfileInfoRow({
+    required this.title,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(height: 20,),
-          ProfileWidget(
-            imagePath: user.imagePath,
-            onClicked: () async {},
+          Text(
+            title,
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 24),
-          buildName(user),
-          const SizedBox(height: 24),
-          NumbersWidget(),
-          const SizedBox(height: 48),
-          buildAbout(user),
+          Text(
+            value,
+            style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
   }
-
-  Widget buildName(User user) => Column(
-        children: [
-          Text(
-            user.name,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-
-        ],
-      );
-
-  Widget buildAbout(User user) => Container(
-        padding: EdgeInsets.symmetric(horizontal: 48),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Location',style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            SizedBox(height: 30,),
-            Text(
-              'Medical History',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              user.about,
-              style: TextStyle(fontSize: 16, height: 1.4),
-            ),
-          ],
-        ),
-      );
 }
